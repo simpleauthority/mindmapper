@@ -35,7 +35,7 @@ export default {
     '@nuxtjs/pwa',
     // https://www.npmjs.com/package/nuxt-vuex-localstorage
     ['nuxt-vuex-localstorage', {
-      localStorage: ['projects']
+      localStorage: ['ls']
     }]
   ],
 

@@ -4,12 +4,18 @@
     title="Create a new project"
     size="lg"
     ok-only
-    ok-title="Create my project"
+    :ok-title="
+      formComplete ? 'Create my project' : 'Finish filling in the form, please'
+    "
+    :ok-disabled="!formComplete"
+    @show="reset"
+    @hidden="reset"
+    @ok="handleSubmit"
   >
     <p>
       Ready to make a new project? Fill in this information and we'll get going.
     </p>
-    <b-form>
+    <b-form ref="form">
       <b-form-group
         id="project-name-group"
         label="Project Name"
@@ -51,6 +57,33 @@ export default {
       name: '',
       mainIdea: '',
     }
+  },
+  computed: {
+    formComplete() {
+      return !!this.name && !!this.mainIdea
+    },
+  },
+  methods: {
+    reset() {
+      this.name = ''
+      this.mainIdea = ''
+    },
+    handleSubmit(evt) {
+      evt.preventDefault()
+      this.submit()
+    },
+    submit() {
+      if (this.formComplete && this.$refs.form.checkValidity()) {
+        this.$store.commit('addProject', {
+          name: this.name,
+          mainIdea: this.mainIdea,
+        })
+
+        this.$nextTick(() => {
+          this.$bvModal.hide('create-project-modal')
+        })
+      }
+    },
   },
 }
 </script>

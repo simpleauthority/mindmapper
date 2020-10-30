@@ -1,5 +1,6 @@
 <template>
   <ProjectView v-if="hasCurrentProject" />
+  <ProjectSelector v-else-if="hasAnyProjects" />
   <CenteredBox v-else>
     <h2>You have no projects yet.</h2>
     <p>
@@ -14,13 +15,20 @@
 
 <script>
 import ProjectView from '~/components/project/ProjectView'
+import ProjectSelector from '~/components/project/ProjectSelector'
 import CenteredBox from '~/components/structure/CenteredBox'
 
 export default {
-  components: { ProjectView, CenteredBox },
+  components: { ProjectView, ProjectSelector, CenteredBox },
   computed: {
     hasCurrentProject() {
       return !!this.$store.state.app.currentProjectId
+    },
+    hasAnyProjects() {
+      return (
+        Array.isArray(this.$store.state.ls.projects) &&
+        this.$store.state.ls.projects.length
+      )
     },
   },
   methods: {

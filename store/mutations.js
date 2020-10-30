@@ -1,4 +1,4 @@
-import { v5 as uuidv5 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import _ from 'lodash'
 
 function findIdx(obj, id) {
@@ -28,145 +28,145 @@ export default {
     }
   },
   // === projects === //
-  addProject(state) {
-    state.projects.push({
-      id: uuidv5(),
-      name: '',
-      mainIdea: '',
+  addProject(state, payload) {
+    state.ls.projects.push({
+      id: uuidv4(),
+      name: payload.name,
+      mainIdea: payload.mainIdea,
       subIdeas: [],
     })
   },
   removeProject(state, projectId) {
-    delete state.projects[findIdx(state.projects, projectId)]
+    delete state.ls.projects[findIdx(state.ls.projects, projectId)]
   },
   setMainIdea(state, payload) {
-    const projectIdx = findIdx(state.projects, payload.projectId)
-    state.projects[projectIdx].mainIdea = payload.mainIdea
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
+    state.ls.projects[projectIdx].mainIdea = payload.mainIdea
   },
 
   // === subideas === //
   addSubIdea(state, payload) {
-    const projectIdx = findIdx(state.projects, payload.projectId)
-    state.projects[projectIdx].subIdeas.push({
-      id: uuidv5(),
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
+    state.ls.projects[projectIdx].subIdeas.push({
+      id: uuidv4(),
       text: '',
       counterpoints: [],
     })
   },
   removeSubIdea(state, payload) {
-    const projectIdx = findIdx(state.projects, payload.projectId)
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
     const subIdeaIdx = findIdx(
-      state.projects[projectIdx].subIdeas,
+      state.ls.projects[projectIdx].subIdeas,
       payload.subIdeaId
     )
-    delete state.projects[projectIdx].subIdeas[subIdeaIdx]
+    delete state.ls.projects[projectIdx].subIdeas[subIdeaIdx]
   },
   updateSubIdeaText(state, payload) {
-    const projectIdx = findIdx(state.projects, payload.projectId)
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
     const subIdeaIdx = findIdx(
-      state.projects[projectIdx].subIdeas,
+      state.ls.projects[projectIdx].subIdeas,
       payload.subIdeaId
     )
-    state.projects[projectIdx].subIdeas[subIdeaIdx].text = payload.text
+    state.ls.projects[projectIdx].subIdeas[subIdeaIdx].text = payload.text
   },
 
   // === counterpoints === //
   addCounterpoint(state, payload) {
-    const projectIdx = findIdx(state.projects, payload.projectId)
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
     const subIdeaIdx = findIdx(
-      state.projects[projectIdx].subIdeas,
+      state.ls.projects[projectIdx].subIdeas,
       payload.subIdeaId
     )
-    state.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints.push({
-      id: uuidv5(),
+    state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints.push({
+      id: uuidv4(),
       text: '',
       rebuttals: [],
     })
   },
   removeCounterpoint(state, payload) {
-    const projectIdx = findIdx(state.projects, payload.projectId)
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
     const subIdeaIdx = findIdx(
-      state.projects[projectIdx].subIdeas,
+      state.ls.projects[projectIdx].subIdeas,
       payload.subIdeaId
     )
     const counterpointIdx = findIdx(
-      state.projects[projectIdx].subIdeas[subIdeaIdx],
+      state.ls.projects[projectIdx].subIdeas[subIdeaIdx],
       payload.counterpointId
     )
-    delete state.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
+    delete state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
       counterpointIdx
     ]
   },
   updateCounterpointText(state, payload) {
-    const projectIdx = findIdx(state.projects, payload.projectId)
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
     const subIdeaIdx = findIdx(
-      state.projects[projectIdx].subIdeas,
+      state.ls.projects[projectIdx].subIdeas,
       payload.subIdeaId
     )
     const counterpointIdx = findIdx(
-      state.projects[projectIdx].subIdeas[subIdeaIdx],
+      state.ls.projects[projectIdx].subIdeas[subIdeaIdx],
       payload.counterpointId
     )
-    state.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
+    state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
       counterpointIdx
     ].text = payload.text
   },
 
   // === rebuttals === //
   addRebuttal(state, payload) {
-    const projectIdx = findIdx(state.projects, payload.projectId)
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
     const subIdeaIdx = findIdx(
-      state.projects[projectIdx].subIdeas,
+      state.ls.projects[projectIdx].subIdeas,
       payload.subIdeaId
     )
     const counterpointIdx = findIdx(
-      state.projects[projectIdx].subIdeas[subIdeaIdx],
+      state.ls.projects[projectIdx].subIdeas[subIdeaIdx],
       payload.counterpointId
     )
-    state.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
+    state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
       counterpointIdx
     ].rebuttals.push({
-      id: uuidv5(),
+      id: uuidv4(),
       text: '',
     })
   },
   removeRebuttal(state, payload) {
-    const projectIdx = findIdx(state.projects, payload.projectId)
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
     const subIdeaIdx = findIdx(
-      state.projects[projectIdx].subIdeas,
+      state.ls.projects[projectIdx].subIdeas,
       payload.subIdeaId
     )
     const counterpointIdx = findIdx(
-      state.projects[projectIdx].subIdeas[subIdeaIdx],
+      state.ls.projects[projectIdx].subIdeas[subIdeaIdx],
       payload.counterpointId
     )
     const rebuttalIdx = findIdx(
-      state.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
+      state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
         counterpointIdx
       ],
       payload.rebuttalId
     )
-    delete state.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
+    delete state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
       counterpointIdx
     ].rebuttals[rebuttalIdx]
   },
   updateRebuttalText(state, payload) {
-    const projectIdx = findIdx(state.projects, payload.projectId)
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
     const subIdeaIdx = findIdx(
-      state.projects[projectIdx].subIdeas,
+      state.ls.projects[projectIdx].subIdeas,
       payload.subIdeaId
     )
     const counterpointIdx = findIdx(
-      state.projects[projectIdx].subIdeas[subIdeaIdx],
+      state.ls.projects[projectIdx].subIdeas[subIdeaIdx],
       payload.counterpointId
     )
     const rebuttalIdx = findIdx(
-      state.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
+      state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
         counterpointIdx
       ],
       payload.rebuttalId
     )
-    state.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
+    state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
       counterpointIdx
     ].rebuttals[rebuttalIdx].text = payload.rebuttalText
   },

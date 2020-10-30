@@ -5,5 +5,7 @@ export default () => ({
     currentCounterpointId: '',
     currentRebuttalId: '',
   },
-  projects: [],
+  ls: {
+    projects: [],
+  },
 })
