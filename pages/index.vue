@@ -1,35 +1,31 @@
 <template>
-  <b-container>
-    <header class="text-center mb-3">
-      <h1>mindmapper</h1>
-      <h4>module two project</h4>
-    </header>
-    <section id="main-idea" class="mb-3">
-      <MainInput class="mx-auto" @update="onMainIdea" />
-    </section>
-    <section id="offshoots">
-      <OffshootContainer :has-main-idea="hasMainIdea" />
-    </section>
-  </b-container>
+  <ProjectView v-if="hasCurrentProject" />
+  <CenteredBox v-else>
+    <h2>You have no projects yet.</h2>
+    <p>
+      Usually this screen will show you all your projects, but it looks like you
+      don't have any yet.
+    </p>
+    <b-button variant="success" @click="openCreateProjectModal"
+      >Create one?</b-button
+    >
+  </CenteredBox>
 </template>
 
 <script>
-import _ from 'lodash'
-import { mapState } from 'vuex'
-import MainInput from '~/components/MainInput'
-import OffshootContainer from '~/components/OffshootContainer'
+import ProjectView from '~/components/project/ProjectView'
+import CenteredBox from '~/components/structure/CenteredBox'
 
 export default {
-  components: { MainInput, OffshootContainer },
+  components: { ProjectView, CenteredBox },
   computed: {
-    ...mapState(['main_idea']),
-    hasMainIdea() {
-      return _.isString(this.main_idea)
+    hasCurrentProject() {
+      return !!this.$store.state.app.currentProjectId
     },
   },
   methods: {
-    onMainIdea(data) {
-      this.$store.dispatch('setMainIdea', data)
+    openCreateProjectModal() {
+      this.$bvModal.show('create-project-modal')
     },
   },
 }

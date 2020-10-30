@@ -1,4 +1,9 @@
 export default () => ({
-  main_idea: undefined,
-  offshoots: [],
+  app: {
+    currentProjectId: '',
+    currentSubIdeaId: '',
+    currentCounterpointId: '',
+    currentRebuttalId: '',
+  },
+  projects: [],
 })
