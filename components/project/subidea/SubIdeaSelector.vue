@@ -23,7 +23,7 @@
               <p>
                 You have
                 {{ subIdeas.length }}
-                sub-idea(s). Click one to enter the sub-idea viewer.
+                sub-idea(s). Choose one to enter the sub-idea viewer.
               </p>
             </b-col>
             <b-col>
@@ -43,14 +43,30 @@
               cols="6"
               class="mb-3"
             >
-              <b-card
-                class="clickable-card"
-                no-body
-                @click="selectSubIdea(subIdea.id)"
-              >
-                <b-card-header
-                  >Sub-idea {{ idx + 1 }} (0 counterpoints)</b-card-header
-                >
+              <b-card class="clickable-card" no-body>
+                <b-card-header>
+                  <b-row>
+                    <b-col>
+                      <a href="#" @click.prevent="selectSubIdea(subIdea.id)"
+                        >Sub-idea {{ idx + 1 }} (0 counterpoints)</a
+                      >
+                    </b-col>
+                    <b-col>
+                      <b-button
+                        class="d-block ml-auto"
+                        variant="danger"
+                        size="sm"
+                        @click="
+                          openConfirmSubIdeaDeletionModal(
+                            currentProjectId,
+                            subIdea.id
+                          )
+                        "
+                        ><fa icon="trash"
+                      /></b-button>
+                    </b-col>
+                  </b-row>
+                </b-card-header>
                 <b-card-body>
                   <b-card-text>
                     <p>{{ subIdea.text }}</p>
@@ -91,6 +107,20 @@ export default {
     },
     selectSubIdea(subIdeaId) {
       this.$store.commit('updateCurrentSubIdeaId', subIdeaId)
+    },
+    async openConfirmSubIdeaDeletionModal(projectId, subIdeaId) {
+      try {
+        const resp = await this.$bvModal.msgBoxConfirm(
+          `Are you sure you want to delete this sub-idea? This will also delete all counterpoints and rebuttals. There is no going back.`
+        )
+        if (resp) {
+          this.$store.commit('removeSubIdea', { projectId, subIdeaId })
+        }
+      } catch {
+        this.$bvModal.msgBoxOk(
+          'There was an error deleting the sub-idea. Please try again later.'
+        )
+      }
     },
   },
 }

@@ -23,7 +23,7 @@
               <p>
                 You have
                 {{ rebuttals.length }}
-                rebuttals(s). Click one to enter the rebuttal viewer.
+                rebuttals(s). Choose one to enter the rebuttal viewer.
               </p>
             </b-col>
             <b-col>
@@ -43,12 +43,32 @@
               cols="6"
               class="mb-3"
             >
-              <b-card
-                class="clickable-card"
-                no-body
-                @click="selectRebuttal(rebuttal.id)"
-              >
-                <b-card-header>Rebuttal {{ idx + 1 }}</b-card-header>
+              <b-card class="clickable-card" no-body>
+                <b-card-header>
+                  <b-row>
+                    <b-col>
+                      <a href="#" @click.prevent="selectRebuttal(rebuttal.id)"
+                        >Rebuttal {{ idx + 1 }}</a
+                      >
+                    </b-col>
+                    <b-col>
+                      <b-button
+                        class="d-block ml-auto"
+                        variant="danger"
+                        size="sm"
+                        @click="
+                          openConfirmRebuttalDeletionModal(
+                            currentProjectId,
+                            currentSubIdeaId,
+                            currentCounterpointId,
+                            rebuttal.id
+                          )
+                        "
+                        ><fa icon="trash"
+                      /></b-button>
+                    </b-col>
+                  </b-row>
+                </b-card-header>
                 <b-card-body>
                   <b-card-text>
                     <p>{{ rebuttal.text }}</p>
@@ -106,6 +126,30 @@ export default {
     },
     selectRebuttal(rebuttalId) {
       this.$store.commit('updateCurrentRebuttalId', rebuttalId)
+    },
+    async openConfirmRebuttalDeletionModal(
+      projectId,
+      subIdeaId,
+      counterpointId,
+      rebuttalId
+    ) {
+      try {
+        const resp = await this.$bvModal.msgBoxConfirm(
+          `Are you sure you want to delete this rebuttal? There is no going back.`
+        )
+        if (resp) {
+          this.$store.commit('removeRebuttal', {
+            projectId,
+            subIdeaId,
+            counterpointId,
+            rebuttalId,
+          })
+        }
+      } catch {
+        this.$bvModal.msgBoxOk(
+          'There was an error deleting the rebuttal. Please try again later.'
+        )
+      }
     },
   },
 }

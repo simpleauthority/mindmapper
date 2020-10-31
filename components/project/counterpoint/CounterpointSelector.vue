@@ -23,7 +23,7 @@
               <p>
                 You have
                 {{ counterpoints.length }}
-                counterpoint(s). Click one to enter the counterpoint viewer.
+                counterpoint(s). Choose one to enter the counterpoint viewer.
               </p>
             </b-col>
             <b-col>
@@ -43,14 +43,33 @@
               cols="6"
               class="mb-3"
             >
-              <b-card
-                class="clickable-card"
-                no-body
-                @click="selectCounterpoint(counterpoint.id)"
-              >
-                <b-card-header
-                  >Counterpoint {{ idx + 1 }} (0 rebuttals)</b-card-header
-                >
+              <b-card class="clickable-card" no-body>
+                <b-card-header>
+                  <b-row>
+                    <b-col>
+                      <a
+                        href="#"
+                        @click.prevent="selectCounterpoint(counterpoint.id)"
+                        >Counterpoint {{ idx + 1 }} (0 rebuttals)</a
+                      >
+                    </b-col>
+                    <b-col>
+                      <b-button
+                        class="d-block ml-auto"
+                        variant="danger"
+                        size="sm"
+                        @click="
+                          openConfirmCounterpointDeletionModal(
+                            currentProjectId,
+                            currentSubIdeaId,
+                            counterpoint.id
+                          )
+                        "
+                        ><fa icon="trash"
+                      /></b-button>
+                    </b-col>
+                  </b-row>
+                </b-card-header>
                 <b-card-body>
                   <b-card-text>
                     <p>{{ counterpoint.text }}</p>
@@ -95,6 +114,28 @@ export default {
     },
     selectCounterpoint(counterpointId) {
       this.$store.commit('updateCurrentCounterpointId', counterpointId)
+    },
+    async openConfirmCounterpointDeletionModal(
+      projectId,
+      subIdeaId,
+      counterpointId
+    ) {
+      try {
+        const resp = await this.$bvModal.msgBoxConfirm(
+          `Are you sure you want to delete this counterpoint? This will also delete all rebuttals. There is no going back.`
+        )
+        if (resp) {
+          this.$store.commit('removeCounterpoint', {
+            projectId,
+            subIdeaId,
+            counterpointId,
+          })
+        }
+      } catch {
+        this.$bvModal.msgBoxOk(
+          'There was an error deleting the counterpoint. Please try again later.'
+        )
+      }
     },
   },
 }

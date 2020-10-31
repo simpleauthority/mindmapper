@@ -3,7 +3,7 @@
     <b-row class="mb-3">
       <b-col>
         <p>
-          You have {{ projects.length }} project(s). Click one to enter the
+          You have {{ projects.length }} project(s). Choose one to enter the
           project viewer.
         </p>
       </b-col>
@@ -23,13 +23,27 @@
         cols="6"
         class="mb-3"
       >
-        <b-card
-          class="clickable-card"
-          no-body
-          @click="selectProject(project.id)"
-        >
+        <b-card class="clickable-card" no-body>
           <b-card-header>
-            {{ project.name }} ({{ project.subIdeas.length }} sub-ideas)
+            <b-row>
+              <b-col>
+                <a href="#" @click.prevent="selectProject(project.id)"
+                  >{{ project.name }} ({{
+                    project.subIdeas.length
+                  }}
+                  sub-ideas)</a
+                >
+              </b-col>
+              <b-col>
+                <b-button
+                  class="d-block ml-auto"
+                  variant="danger"
+                  size="sm"
+                  @click="openConfirmProjectDeletionModal(project.id)"
+                  ><fa icon="trash"
+                /></b-button>
+              </b-col>
+            </b-row>
           </b-card-header>
           <b-card-body>
             <b-card-text>
@@ -53,7 +67,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import _ from 'lodash'
 import CenteredBox from '~/components/structure/CenteredBox'
 
@@ -64,6 +78,7 @@ export default {
     ...mapState({
       projects: (state) => state.ls.projects,
     }),
+    ...mapGetters(['getProjectById']),
     hasAnyProjects() {
       return !_.isEmpty(this.projects)
     },
@@ -74,6 +89,24 @@ export default {
     },
     selectProject(projectId) {
       this.$store.commit('updateCurrentProjectId', projectId)
+    },
+    async openConfirmProjectDeletionModal(projectId) {
+      try {
+        const resp = await this.$bvModal.msgBoxConfirm(
+          `Are you sure you want to delete the project "${
+            this.getProjectById(projectId).name
+          }"? This will also delete all sub-ideas, counterpoints, and rebuttals. There is no going back.`
+        )
+        // eslint-disable-next-line no-console
+        console.log(resp)
+        if (resp) {
+          this.$store.commit('removeProject', projectId)
+        }
+      } catch {
+        this.$bvModal.msgBoxOk(
+          'There was an error deleting the project. Please try again later.'
+        )
+      }
     },
   },
 }

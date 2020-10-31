@@ -3,7 +3,11 @@
     <NavBar />
     <b-container>
       <main>
-        <Nuxt />
+        <Nuxt v-if="loaded" />
+        <div v-else>
+          <p>Loading your data...please wait!</p>
+          <b-spinner />
+        </div>
       </main>
     </b-container>
     <HelpModal />
@@ -39,6 +43,11 @@ export default {
     CreateSubIdeaModal,
     CreateCounterpointModal,
     CreateRebuttalModal,
+  },
+  computed: {
+    loaded() {
+      return this.$store.state.ls.status
+    },
   },
 }
 </script>
