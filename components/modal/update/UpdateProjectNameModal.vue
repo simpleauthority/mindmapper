@@ -1,26 +1,25 @@
 <template>
   <b-modal
-    id="create-project-modal"
-    title="Create a new project"
+    id="update-project-name-modal"
+    title="Update project name"
     size="lg"
     ok-only
     :ok-title="
-      formComplete ? 'Create my project' : 'Finish filling in the form, please'
+      formComplete
+        ? 'Update project name'
+        : 'Finish filling in the form, please'
     "
     :ok-disabled="!formComplete"
     @show="reset"
     @hidden="reset"
     @ok="handleSubmit"
   >
-    <p>
-      Ready to make a new project? Fill in this information and we'll get going.
-    </p>
     <b-form ref="form">
       <b-form-group
         id="project-name-group"
-        label="Project Name"
+        label="New Project Name"
         label-for="project-name-input"
-        description="Give your project a nice name so you can find it later."
+        description="Enter a new name for your project"
       >
         <b-form-input
           id="project-name-input"
@@ -31,42 +30,39 @@
         >
         </b-form-input>
       </b-form-group>
-      <b-form-group
-        id="main-idea-group"
-        label="Main Idea / Thesis"
-        label-for="main-idea-input"
-        description="Type the main idea or thesis statement."
-      >
-        <b-form-textarea
-          id="main-idea-input"
-          v-model="mainIdea"
-          rows="4"
-          no-resize
-        >
-        </b-form-textarea>
-      </b-form-group>
     </b-form>
   </b-modal>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
+
 export default {
-  name: 'CreateProjectModal',
+  name: 'UpdateProjectNameModal',
   data() {
     return {
       name: '',
-      mainIdea: '',
     }
   },
   computed: {
+    ...mapState({
+      currentProjectId: (state) => state.app.currentProjectId,
+    }),
+    ...mapGetters(['getProjectById']),
     formComplete() {
-      return !!this.name && !!this.mainIdea
+      return !!this.name
     },
+  },
+  mounted() {
+    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+      if (modalId === 'update-project-name-modal') {
+        this.name = this.getProjectById(this.currentProjectId).name
+      }
+    })
   },
   methods: {
     reset() {
       this.name = ''
-      this.mainIdea = ''
     },
     handleSubmit(evt) {
       evt.preventDefault()
@@ -74,13 +70,13 @@ export default {
     },
     submit() {
       if (this.formComplete && this.$refs.form.checkValidity()) {
-        this.$store.commit('addProject', {
+        this.$store.commit('updateProjectName', {
+          projectId: this.currentProjectId,
           name: this.name,
-          mainIdea: this.mainIdea,
         })
 
         this.$nextTick(() => {
-          this.$bvModal.hide('create-project-modal')
+          this.$bvModal.hide('update-project-name-modal')
         })
       }
     },

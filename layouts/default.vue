@@ -18,6 +18,11 @@
     <CreateSubIdeaModal />
     <CreateCounterpointModal />
     <CreateRebuttalModal />
+    <UpdateProjectNameModal />
+    <UpdateMainIdeaModal />
+    <UpdateSubIdeaModal />
+    <UpdateCounterpointModal />
+    <UpdateRebuttalModal />
   </div>
 </template>
 
@@ -31,6 +36,11 @@ import CreateProjectModal from '~/components/modal/create/CreateProjectModal'
 import CreateSubIdeaModal from '~/components/modal/create/CreateSubIdeaModal'
 import CreateCounterpointModal from '~/components/modal/create/CreateCounterpointModal'
 import CreateRebuttalModal from '~/components/modal/create/CreateRebuttalModal'
+import UpdateProjectNameModal from '~/components/modal/update/UpdateProjectNameModal'
+import UpdateMainIdeaModal from '~/components/modal/update/UpdateMainIdeaModal'
+import UpdateSubIdeaModal from '~/components/modal/update/UpdateSubIdeaModal'
+import UpdateCounterpointModal from '~/components/modal/update/UpdateCounterpointModal'
+import UpdateRebuttalModal from '~/components/modal/update/UpdateRebuttalModal'
 
 export default {
   components: {
@@ -43,6 +53,11 @@ export default {
     CreateSubIdeaModal,
     CreateCounterpointModal,
     CreateRebuttalModal,
+    UpdateProjectNameModal,
+    UpdateMainIdeaModal,
+    UpdateSubIdeaModal,
+    UpdateCounterpointModal,
+    UpdateRebuttalModal,
   },
   computed: {
     loaded() {

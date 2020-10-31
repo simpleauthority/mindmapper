@@ -2,7 +2,17 @@
   <b-container>
     <b-row class="mb-3">
       <b-col>
-        <h2>{{ project.name }}</h2>
+        <h2>
+          {{ project.name }}
+          <span
+            ><b-button
+              size="sm"
+              pill
+              variant="info"
+              @click.prevent="openUpdateProjectNameModal"
+              ><fa icon="edit" /></b-button
+          ></span>
+        </h2>
       </b-col>
       <b-col>
         <b-button
@@ -16,7 +26,21 @@
     <b-row class="mb-3">
       <b-col>
         <b-card no-body>
-          <b-card-header>Main Idea / Thesis</b-card-header>
+          <b-card-header>
+            <b-row>
+              <b-col>Main Idea / Thesis </b-col>
+              <b-col>
+                <b-button
+                  size="sm"
+                  pill
+                  variant="info"
+                  class="d-block ml-auto"
+                  @click.prevent="openUpdateMainIdeaModal"
+                  ><fa icon="edit"
+                /></b-button>
+              </b-col>
+            </b-row>
+          </b-card-header>
           <b-card-body>
             <b-card-text>
               <p>{{ project.mainIdea }}</p>
@@ -51,6 +75,12 @@ export default {
   methods: {
     goBackToAllProjects() {
       this.$store.commit('resetAllCurrentIds')
+    },
+    openUpdateProjectNameModal() {
+      this.$bvModal.show('update-project-name-modal')
+    },
+    openUpdateMainIdeaModal() {
+      this.$bvModal.show('update-main-idea-modal')
     },
   },
 }

@@ -51,7 +51,11 @@ export default {
       (project) => project.id !== projectId
     )
   },
-  setMainIdea(state, payload) {
+  updateProjectName(state, payload) {
+    const projectIdx = findIdx(state.ls.projects, payload.projectId)
+    state.ls.projects[projectIdx].name = payload.name
+  },
+  updateMainIdea(state, payload) {
     const projectIdx = findIdx(state.ls.projects, payload.projectId)
     state.ls.projects[projectIdx].mainIdea = payload.mainIdea
   },
