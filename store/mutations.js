@@ -19,6 +19,15 @@ export default {
   updateCurrentRebuttalId(state, rebuttalId) {
     state.app.currentRebuttalId = rebuttalId
   },
+  resetSubIdeaId(state) {
+    state.app.currentSubIdeaId = ''
+  },
+  resetCounterpointId(state) {
+    state.app.currentCounterpointId = ''
+  },
+  resetRebuttalId(state) {
+    state.app.currentRebuttalId = ''
+  },
   resetAllCurrentIds(state) {
     state.app = {
       currentProjectId: '',
@@ -49,7 +58,7 @@ export default {
     const projectIdx = findIdx(state.ls.projects, payload.projectId)
     state.ls.projects[projectIdx].subIdeas.push({
       id: uuidv4(),
-      text: '',
+      text: payload.text,
       counterpoints: [],
     })
   },
@@ -79,7 +88,7 @@ export default {
     )
     state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints.push({
       id: uuidv4(),
-      text: '',
+      text: payload.text,
       rebuttals: [],
     })
   },
@@ -120,14 +129,14 @@ export default {
       payload.subIdeaId
     )
     const counterpointIdx = findIdx(
-      state.ls.projects[projectIdx].subIdeas[subIdeaIdx],
+      state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints,
       payload.counterpointId
     )
     state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
       counterpointIdx
     ].rebuttals.push({
       id: uuidv4(),
-      text: '',
+      text: payload.text,
     })
   },
   removeRebuttal(state, payload) {
@@ -137,13 +146,13 @@ export default {
       payload.subIdeaId
     )
     const counterpointIdx = findIdx(
-      state.ls.projects[projectIdx].subIdeas[subIdeaIdx],
+      state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints,
       payload.counterpointId
     )
     const rebuttalIdx = findIdx(
       state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
         counterpointIdx
-      ],
+      ].rebuttals,
       payload.rebuttalId
     )
     delete state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[

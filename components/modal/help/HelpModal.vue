@@ -41,3 +41,9 @@
     </p></b-modal
   >
 </template>
+
+<script>
+export default {
+  name: 'HelpModal',
+}
+</script>

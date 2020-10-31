@@ -36,6 +36,16 @@ export default {
     // https://www.npmjs.com/package/nuxt-vuex-localstorage
     ['nuxt-vuex-localstorage', {
       localStorage: ['ls']
+    }],
+    // https://www.npmjs.com/package/nuxt-fontawesome
+    ['nuxt-fontawesome', {
+      component: 'fa',
+      imports: [
+        {
+          set: '@fortawesome/free-solid-svg-icons',
+          icons: ['faQuestionCircle']
+        }
+      ]
     }]
   ],
 

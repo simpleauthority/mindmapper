@@ -4,3 +4,13 @@
 @import 'bootstrap-vue/src/index.scss';
 
 @import '~/assets/theme/fonts/index.scss';
+
+.clickable-card {
+    &:hover {
+      cursor: grab;
+    }
+  
+    &:active {
+      cursor: grabbing;
+    }
+  }

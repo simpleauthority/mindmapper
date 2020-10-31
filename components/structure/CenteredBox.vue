@@ -1,6 +1,6 @@
 <template>
-  <div class="centered-box--container">
-    <div class="centered-box--box">
+  <div class="center-container">
+    <div class="centered-box">
       <slot></slot>
     </div>
   </div>
@@ -12,14 +12,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.centered-box--container {
+<style lang="scss" scoped>
+.center-container {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .centered-box--box {
+  .centered-box {
     width: 70%;
     border: 2px dashed #acacac;
     padding: 2.5rem;
