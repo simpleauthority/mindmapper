@@ -31,24 +31,17 @@
                   >{{ project.name }} ({{
                     project.subIdeas.length
                   }}
-                  sub-ideas)</a
+                  sub-idea(s))</a
                 >
               </b-col>
               <b-col>
-                <div class="text-right">
-                  <b-button
-                    variant="primary"
-                    size="sm"
-                    @click="openExportProjectToPdfModal(project.id)"
-                    ><fa icon="download"
-                  /></b-button>
-                  <b-button
-                    variant="danger"
-                    size="sm"
-                    @click="openConfirmProjectDeletionModal(project.id)"
-                    ><fa icon="trash"
-                  /></b-button>
-                </div>
+                <b-button
+                  class="d-block ml-auto"
+                  variant="danger"
+                  size="sm"
+                  @click="openConfirmProjectDeletionModal(project.id)"
+                  ><fa icon="trash"
+                /></b-button>
               </b-col>
             </b-row>
           </b-card-header>
@@ -114,9 +107,6 @@ export default {
           'There was an error deleting the project. Please try again later.'
         )
       }
-    },
-    openExportProjectToPdfModal() {
-      this.$bvModal.show('export-project-to-pdf-modal')
     },
   },
 }

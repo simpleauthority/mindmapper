@@ -15,12 +15,14 @@
         </h2>
       </b-col>
       <b-col>
-        <b-button
-          class="d-block ml-auto"
-          variant="info"
-          @click="goBackToAllProjects"
-          >Back to All Projects</b-button
-        >
+        <div class="text-right">
+          <b-button variant="secondary" @click="goBackToAllProjects"
+            >Back to All Projects</b-button
+          >
+          <b-button variant="success" @click="openExportProjectToPdfModal"
+            >Export Project to PDF</b-button
+          >
+        </div>
       </b-col>
     </b-row>
     <b-row class="mb-3">
@@ -75,6 +77,9 @@ export default {
   methods: {
     goBackToAllProjects() {
       this.$store.commit('resetAllCurrentIds')
+    },
+    openExportProjectToPdfModal() {
+      this.$bvModal.show('export-project-to-pdf-modal')
     },
     openUpdateProjectNameModal() {
       this.$bvModal.show('update-project-name-modal')

@@ -17,7 +17,7 @@
       <b-col>
         <b-button
           class="d-block ml-auto"
-          variant="info"
+          variant="secondary"
           @click="goBackToCounterpointView"
         >
           Back to Counterpoint View
