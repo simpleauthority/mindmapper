@@ -11,9 +11,7 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [
-    '~/assets/global.scss'
-  ],
+  css: ['~/assets/global.scss'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [],
@@ -34,25 +32,31 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     // https://www.npmjs.com/package/nuxt-vuex-localstorage
-    ['nuxt-vuex-localstorage', {
-      localStorage: ['ls']
-    }],
+    [
+      'nuxt-vuex-localstorage',
+      {
+        localStorage: ['ls'],
+      },
+    ],
     // https://www.npmjs.com/package/nuxt-fontawesome
-    ['nuxt-fontawesome', {
-      component: 'fa',
-      imports: [
-        {
-          set: '@fortawesome/free-solid-svg-icons',
-          icons: ['faQuestionCircle', 'faTrash', 'faEdit', 'faDownload']
-        }
-      ]
-    }]
+    [
+      'nuxt-fontawesome',
+      {
+        component: 'fa',
+        imports: [
+          {
+            set: '@fortawesome/free-solid-svg-icons',
+            icons: ['faQuestionCircle', 'faTrash', 'faEdit', 'faDownload'],
+          },
+        ],
+      },
+    ],
   ],
 
   // Bootstrap Vue configuration
   bootstrapVue: {
     bootstrapCSS: false,
-    bootstrapVueCSS: false
+    bootstrapVueCSS: false,
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
@@ -65,10 +69,10 @@ export default {
           loader: 'eslint-loader',
           exclude: /(node_modules)/,
           options: {
-            fix: true
-          }
+            fix: true,
+          },
         })
       }
-    }
+    },
   },
 }
