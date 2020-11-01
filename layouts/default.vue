@@ -3,11 +3,7 @@
     <NavBar />
     <b-container>
       <main>
-        <Nuxt v-if="loaded" />
-        <div v-else>
-          <p>Loading your data...please wait!</p>
-          <b-spinner />
-        </div>
+        <Nuxt />
       </main>
     </b-container>
     <HelpModal />
@@ -61,11 +57,6 @@ export default {
     UpdateCounterpointModal,
     UpdateRebuttalModal,
     ExportProjectToPdfModal,
-  },
-  computed: {
-    loaded() {
-      return this.$store.state.ls.status
-    },
   },
 }
 </script>
