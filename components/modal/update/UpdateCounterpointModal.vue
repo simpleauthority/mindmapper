@@ -5,16 +5,14 @@
     size="lg"
     ok-only
     :ok-title="
-      formComplete
-        ? 'Update counterpoint'
-        : 'Finish filling in the form, please'
+      formComplete ? 'Update counterpoint' : 'Can\'t update to the same value'
     "
     :ok-disabled="!formComplete"
     @show="reset"
     @hidden="reset"
     @ok="handleSubmit"
   >
-    <b-form ref="form">
+    <b-form ref="form" @submit.prevent="handleSubmit">
       <b-form-group
         id="counterpoint-group"
         label="Counterpoint"
@@ -42,6 +40,7 @@ export default {
   data() {
     return {
       text: '',
+      oldText: '',
     }
   },
   computed: {
@@ -52,17 +51,20 @@ export default {
     }),
     ...mapGetters(['getProjectById', 'getSubIdeaById', 'getCounterpointById']),
     formComplete() {
-      return !!this.text
+      return !!this.text && this.text !== this.oldText
     },
   },
   mounted() {
-    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+    this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
       if (modalId === 'update-counterpoint-modal') {
-        this.text = this.getCounterpointById(
+        const text = this.getCounterpointById(
           this.currentProjectId,
           this.currentSubIdeaId,
           this.currentCounterpointId
         ).text
+
+        this.text = text
+        this.oldText = text
       }
     })
   },

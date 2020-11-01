@@ -7,14 +7,14 @@
     :ok-title="
       formComplete
         ? 'Update project main idea'
-        : 'Finish filling in the form, please'
+        : 'Can\'t update to the same value'
     "
     :ok-disabled="!formComplete"
     @show="reset"
     @hidden="reset"
     @ok="handleSubmit"
   >
-    <b-form ref="form">
+    <b-form ref="form" @submit.prevent="handleSubmit">
       <b-form-group
         id="main-idea-group"
         label="Main Idea / Thesis"
@@ -38,10 +38,11 @@
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'UpdateProjectNameModal',
+  name: 'UpdateMainIdeaModal',
   data() {
     return {
       text: '',
+      oldText: '',
     }
   },
   computed: {
@@ -50,13 +51,15 @@ export default {
     }),
     ...mapGetters(['getProjectById']),
     formComplete() {
-      return !!this.text
+      return !!this.text && this.text !== this.oldText
     },
   },
   mounted() {
-    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+    this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
       if (modalId === 'update-main-idea-modal') {
-        this.text = this.getProjectById(this.currentProjectId).mainIdea
+        const text = this.getProjectById(this.currentProjectId).mainIdea
+        this.text = text
+        this.oldText = text
       }
     })
   },

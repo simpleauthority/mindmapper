@@ -28,7 +28,7 @@
         <b-card no-body>
           <b-card-header>
             <b-row>
-              <b-col>Main Idea / Thesis </b-col>
+              <b-col>Main Idea / Thesis</b-col>
               <b-col>
                 <b-button
                   size="sm"

@@ -5,16 +5,14 @@
     size="lg"
     ok-only
     :ok-title="
-      formComplete
-        ? 'Update project name'
-        : 'Finish filling in the form, please'
+      formComplete ? 'Update project name' : 'Can\'t update to the same value'
     "
     :ok-disabled="!formComplete"
     @show="reset"
     @hidden="reset"
     @ok="handleSubmit"
   >
-    <b-form ref="form">
+    <b-form ref="form" @submit.prevent="handleSubmit">
       <b-form-group
         id="project-name-group"
         label="New Project Name"
@@ -42,6 +40,7 @@ export default {
   data() {
     return {
       name: '',
+      oldName: '',
     }
   },
   computed: {
@@ -50,13 +49,15 @@ export default {
     }),
     ...mapGetters(['getProjectById']),
     formComplete() {
-      return !!this.name
+      return !!this.name && this.name !== this.oldName
     },
   },
   mounted() {
-    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+    this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
       if (modalId === 'update-project-name-modal') {
-        this.name = this.getProjectById(this.currentProjectId).name
+        const name = this.getProjectById(this.currentProjectId).name
+        this.name = name
+        this.oldName = name
       }
     })
   },

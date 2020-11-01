@@ -18,7 +18,7 @@
       Think somebody might be able to counter your sub-idea? Fill in what you
       expect that they <em>might</em> say.
     </p>
-    <b-form ref="form">
+    <b-form ref="form" @submit.prevent="handleSubmit">
       <b-form-group
         id="counterpoint-group"
         label="Counterpoint"

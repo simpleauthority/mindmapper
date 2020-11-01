@@ -35,13 +35,20 @@
                 >
               </b-col>
               <b-col>
-                <b-button
-                  class="d-block ml-auto"
-                  variant="danger"
-                  size="sm"
-                  @click="openConfirmProjectDeletionModal(project.id)"
-                  ><fa icon="trash"
-                /></b-button>
+                <div class="text-right">
+                  <b-button
+                    variant="primary"
+                    size="sm"
+                    @click="openExportProjectToPdfModal(project.id)"
+                    ><fa icon="download"
+                  /></b-button>
+                  <b-button
+                    variant="danger"
+                    size="sm"
+                    @click="openConfirmProjectDeletionModal(project.id)"
+                    ><fa icon="trash"
+                  /></b-button>
+                </div>
               </b-col>
             </b-row>
           </b-card-header>
@@ -107,6 +114,9 @@ export default {
           'There was an error deleting the project. Please try again later.'
         )
       }
+    },
+    openExportProjectToPdfModal() {
+      this.$bvModal.show('export-project-to-pdf-modal')
     },
   },
 }

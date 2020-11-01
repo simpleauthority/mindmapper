@@ -5,14 +5,14 @@
     size="lg"
     ok-only
     :ok-title="
-      formComplete ? 'Update rebuttal' : 'Finish filling in the form, please'
+      formComplete ? 'Update rebuttal' : 'Can\'t update to the same value'
     "
     :ok-disabled="!formComplete"
     @show="reset"
     @hidden="reset"
     @ok="handleSubmit"
   >
-    <b-form ref="form">
+    <b-form ref="form" @submit.prevent="handleSubmit">
       <b-form-group
         id="rebuttal-group"
         label="Rebuttal"
@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       text: '',
+      oldText: '',
     }
   },
   computed: {
@@ -56,18 +57,21 @@ export default {
       'getRebuttalById',
     ]),
     formComplete() {
-      return !!this.text
+      return !!this.text && this.text !== this.oldText
     },
   },
   mounted() {
-    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+    this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
       if (modalId === 'update-rebuttal-modal') {
-        this.text = this.getRebuttalById(
+        const text = this.getRebuttalById(
           this.currentProjectId,
           this.currentSubIdeaId,
           this.currentCounterpointId,
           this.currentRebuttalId
         ).text
+
+        this.text = text
+        this.oldText = text
       }
     })
   },

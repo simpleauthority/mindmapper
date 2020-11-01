@@ -15,7 +15,7 @@
     <p>
       Ready to make a new project? Fill in this information and we'll get going.
     </p>
-    <b-form ref="form">
+    <b-form ref="form" @submit.prevent="handleSubmit">
       <b-form-group
         id="project-name-group"
         label="Project Name"

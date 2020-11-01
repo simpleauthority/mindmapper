@@ -5,14 +5,14 @@
     size="lg"
     ok-only
     :ok-title="
-      formComplete ? 'Update sub idea' : 'Finish filling in the form, please'
+      formComplete ? 'Update sub idea' : 'Can\'t update to the same value'
     "
     :ok-disabled="!formComplete"
     @show="reset"
     @hidden="reset"
     @ok="handleSubmit"
   >
-    <b-form ref="form">
+    <b-form ref="form" @submit.prevent="handleSubmit">
       <b-form-group
         id="sub-idea-group"
         label="Sub idea"
@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       text: '',
+      oldText: '',
     }
   },
   computed: {
@@ -49,16 +50,19 @@ export default {
     }),
     ...mapGetters(['getProjectById', 'getSubIdeaById']),
     formComplete() {
-      return !!this.text
+      return !!this.text && this.text !== this.oldText
     },
   },
   mounted() {
-    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+    this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
       if (modalId === 'update-sub-idea-modal') {
-        this.text = this.getSubIdeaById(
+        const text = this.getSubIdeaById(
           this.currentProjectId,
           this.currentSubIdeaId
         ).text
+
+        this.text = text
+        this.oldText = text
       }
     })
   },

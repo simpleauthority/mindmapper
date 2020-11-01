@@ -46,12 +46,12 @@
               <b-card class="clickable-card" no-body>
                 <b-card-header>
                   <b-row>
-                    <b-col>
+                    <b-col cols="10">
                       <a href="#" @click.prevent="selectRebuttal(rebuttal.id)"
                         >Rebuttal {{ idx + 1 }}</a
                       >
                     </b-col>
-                    <b-col>
+                    <b-col cols="2">
                       <b-button
                         class="d-block ml-auto"
                         variant="danger"

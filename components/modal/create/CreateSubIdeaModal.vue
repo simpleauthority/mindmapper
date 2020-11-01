@@ -13,7 +13,7 @@
     @ok="handleSubmit"
   >
     <p>Had a new thought? Let's get it recorded.</p>
-    <b-form ref="form">
+    <b-form ref="form" @submit.prevent="handleSubmit">
       <b-form-group
         id="sub-idea-group"
         label="Sub-idea"

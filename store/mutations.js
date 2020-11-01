@@ -116,7 +116,7 @@ export default {
       payload.subIdeaId
     )
     const counterpointIdx = findIdx(
-      state.ls.projects[projectIdx].subIdeas[subIdeaIdx],
+      state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints,
       payload.counterpointId
     )
     state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
@@ -179,6 +179,6 @@ export default {
     )
     state.ls.projects[projectIdx].subIdeas[subIdeaIdx].counterpoints[
       counterpointIdx
-    ].rebuttals[rebuttalIdx].text = payload.rebuttalText
+    ].rebuttals[rebuttalIdx].text = payload.text
   },
 }

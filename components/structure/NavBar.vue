@@ -3,7 +3,7 @@
     <b-navbar variant="transparent">
       <b-container>
         <b-navbar-brand>
-          <h1 class="brand">mindmapper</h1>
+          <h1 class="brand" @click.prevent="resetView">mindmapper</h1>
         </b-navbar-brand>
         <b-navbar-nav class="ml-auto">
           <b-nav-item @click.prevent="resetView">My Projects</b-nav-item>
@@ -32,5 +32,9 @@ export default {
 .brand {
   font-family: 'Grandstander', cursive;
   font-size: 2rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

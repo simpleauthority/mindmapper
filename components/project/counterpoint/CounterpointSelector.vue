@@ -46,14 +46,21 @@
               <b-card class="clickable-card" no-body>
                 <b-card-header>
                   <b-row>
-                    <b-col>
+                    <b-col cols="10">
                       <a
                         href="#"
                         @click.prevent="selectCounterpoint(counterpoint.id)"
-                        >Counterpoint {{ idx + 1 }} (0 rebuttals)</a
+                        >Counterpoint {{ idx + 1 }} ({{
+                          getCounterpointById(
+                            currentProjectId,
+                            currentSubIdeaId,
+                            counterpoint.id
+                          ).rebuttals.length
+                        }}
+                        rebuttal(s))</a
                       >
                     </b-col>
-                    <b-col>
+                    <b-col cols="2">
                       <b-button
                         class="d-block ml-auto"
                         variant="danger"

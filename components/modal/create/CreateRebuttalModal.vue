@@ -16,7 +16,7 @@
       To form a solid argument, you should be able to rebut each counterpoint
       <em>at least</em> once. Enter your rebuttal to the counterpoint here.
     </p>
-    <b-form ref="form">
+    <b-form ref="form" @submit.prevent="handleSubmit">
       <b-form-group
         id="rebuttal-group"
         label="Rebuttal"

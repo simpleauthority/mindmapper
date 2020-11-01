@@ -23,6 +23,7 @@
     <UpdateSubIdeaModal />
     <UpdateCounterpointModal />
     <UpdateRebuttalModal />
+    <ExportProjectToPdfModal />
   </div>
 </template>
 
@@ -41,6 +42,7 @@ import UpdateMainIdeaModal from '~/components/modal/update/UpdateMainIdeaModal'
 import UpdateSubIdeaModal from '~/components/modal/update/UpdateSubIdeaModal'
 import UpdateCounterpointModal from '~/components/modal/update/UpdateCounterpointModal'
 import UpdateRebuttalModal from '~/components/modal/update/UpdateRebuttalModal'
+import ExportProjectToPdfModal from '~/components/modal/ExportProjectToPdfModal'
 
 export default {
   components: {
@@ -58,6 +60,7 @@ export default {
     UpdateSubIdeaModal,
     UpdateCounterpointModal,
     UpdateRebuttalModal,
+    ExportProjectToPdfModal,
   },
   computed: {
     loaded() {

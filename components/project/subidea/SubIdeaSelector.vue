@@ -46,12 +46,16 @@
               <b-card class="clickable-card" no-body>
                 <b-card-header>
                   <b-row>
-                    <b-col>
+                    <b-col cols="10">
                       <a href="#" @click.prevent="selectSubIdea(subIdea.id)"
-                        >Sub-idea {{ idx + 1 }} (0 counterpoints)</a
+                        >Sub-idea {{ idx + 1 }} ({{
+                          getSubIdeaById(currentProjectId, subIdea.id)
+                            .counterpoints.length
+                        }}
+                        counterpoint(s))</a
                       >
                     </b-col>
-                    <b-col>
+                    <b-col cols="2">
                       <b-button
                         class="d-block ml-auto"
                         variant="danger"
